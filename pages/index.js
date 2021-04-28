@@ -1,8 +1,44 @@
+import { Modal, Button, Form, } from 'react-bootstrap'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useEffect, useState } from 'react'
+import InterviewModal from '../components/InterviewModal'
+import {InlineWidget} from 'react-calendly'
 
 export default function Home() {
+  const [toggle1, setToggle1] = useState(false)
+  const [toggle2, setToggle2] = useState(false)
+  const [gegevens, setGegevens] = useState('')
+  const [toggle3, setToggle3] = useState(false)
+
+  useEffect(() => {
+
+  },[])
+
+
+  function closeModal1() {
+    const random_boolean = Math.random() < 0.4
+    setToggle1(false)
+    setToggle2(true)
+
+    if(!toggle2) {
+      return  <InterviewModal 
+      show={toggle1}
+      onHide={e => closeModal1()}
+      title="Modal header for first popup"
+      formTitle="first popup"
+      placeholder="first popup"
+    />
+    }
+
+    if(toggle3){
+      setToggle2(false)
+    }
+  }
+
+  console.log(gegevens)
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,59 +47,39 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Button onClick={e => setToggle1(true)}>
+        Click me
+      </Button>
+      <Modal show={toggle1} onHide={e => closeModal1()}>
+        <Modal.Header closeButton>Title 1</Modal.Header>
+      </Modal>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <Modal show={toggle2} onHide={e => setToggle2(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal header for 2de popup</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Control
+                  value={gegevens}
+                  onChange={event => setGegevens(event.target.value)}
+                  placeholder="placeholder"
+                />
+                <Button onClick={e => setToggle3(true)}>
+                  Plan uw afspraak
+                </Button>
+              </Form>
+          </Modal.Body>
+          </Modal>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+          <Modal show={toggle3} onHide={e => setToggle3(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Plan afspraak</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <InlineWidget url="https://calendly.com/username/15min" />
+          </Modal.Body>
+          </Modal>
     </div>
   )
 }
