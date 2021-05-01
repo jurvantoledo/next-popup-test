@@ -8,18 +8,32 @@ import {InlineWidget} from 'react-calendly'
 export default function Home() {
   const [toggle1, setToggle1] = useState(false)
   const [toggle2, setToggle2] = useState(false)
-  const [gegevens, setGegevens] = useState('')
   const [toggle3, setToggle3] = useState(false)
+  const [gegevens, setGegevens] = useState('')
+  const [maxValue, setMaxValue] = useState(98)
 
   useEffect(() => {
+    if(toggle3){
+      setToggle2(false)
+    }
 
   },[])
+
+  if(maxValue >= 100) {
+    return null
+  }
+
+  const handleOpen = () => {
+    setToggle1(true)
+    setMaxValue(maxValue + 1)
+
+  }
 
 
   function closeModal1() {
     const random_boolean = Math.random() < 0.4
     setToggle1(false)
-    setToggle2(true)
+    setToggle2(random_boolean)
 
     if(!toggle2) {
       return  <InterviewModal 
@@ -31,12 +45,9 @@ export default function Home() {
     />
     }
 
-    if(toggle3){
-      setToggle2(false)
-    }
   }
 
-  console.log(gegevens)
+  console.log(maxValue)
 
 
   return (
@@ -47,9 +58,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Button onClick={e => setToggle1(true)}>
+      <Button onClick={handleOpen}>
         Click me
       </Button>
+      <>
       <Modal show={toggle1} onHide={e => closeModal1()}>
         <Modal.Header closeButton>Title 1</Modal.Header>
       </Modal>
@@ -80,6 +92,8 @@ export default function Home() {
               <InlineWidget url="https://calendly.com/username/15min" />
           </Modal.Body>
           </Modal>
+          </>
+          
     </div>
   )
 }
