@@ -10,22 +10,17 @@ export default function Home() {
   const [toggle2, setToggle2] = useState(false)
   const [toggle3, setToggle3] = useState(false)
   const [gegevens, setGegevens] = useState('')
-  const [maxValue, setMaxValue] = useState(98)
+  const [maxValue, setMaxValue] = useState(0)
 
   useEffect(() => {
-    if(toggle3){
-      setToggle2(false)
+    if(toggle2){
+      setMaxValue(maxValue + 1)
     }
 
-  },[])
+  },[toggle2])
 
   const handleOpen = () => {
     setToggle1(true)
-    setMaxValue(maxValue + 1)
-  }
-
-  if(maxValue >= 100) {
-    return null
   }
 
 
@@ -43,7 +38,10 @@ export default function Home() {
       placeholder="first popup"
     />
     }
+  }
 
+  if(maxValue >= 100) {
+    return null
   }
 
   console.log(maxValue)
