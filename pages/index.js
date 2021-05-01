@@ -19,14 +19,13 @@ export default function Home() {
 
   },[])
 
-  if(maxValue >= 100) {
-    return null
-  }
-
   const handleOpen = () => {
     setToggle1(true)
     setMaxValue(maxValue + 1)
+  }
 
+  if(maxValue >= 100) {
+    return null
   }
 
 
