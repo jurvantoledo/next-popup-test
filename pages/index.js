@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import InterviewModal from '../components/InterviewModal'
 import {InlineWidget} from 'react-calendly'
+import StepForm from "../components/Form"
 
 export default function Home() {
   const [toggle1, setToggle1] = useState(false)
@@ -13,16 +14,14 @@ export default function Home() {
   const [maxValue, setMaxValue] = useState(0)
 
   useEffect(() => {
-    if(toggle2){
+    if(toggle3){
       setMaxValue(maxValue + 1)
     }
 
-  },[toggle2])
+  },[toggle3])
 
-  const handleOpen = () => {
-    setToggle1(true)
-  }
-
+  const handleOpen = () => setToggle1(true)
+  
 
   function closeModal1() {
     const random_boolean = Math.random() < 0.4
@@ -61,6 +60,7 @@ export default function Home() {
       <>
       <Modal show={toggle1} onHide={e => closeModal1()}>
         <Modal.Header closeButton>Title 1</Modal.Header>
+        <StepForm />
       </Modal>
 
       <Modal show={toggle2} onHide={e => setToggle2(false)}>
